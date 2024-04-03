@@ -1,13 +1,21 @@
-import Table from "./components/Table";
-import tableData1 from "./tableData1.json";
+import Table from './components/Table';
+import tableData1 from './tableData1.json';
 
-const columns = [
-  { label: "Full Name", accessor: "full_name", sortable: true },
-  { label: "Email", accessor: "email", sortable: false },
-  { label: "Gender", accessor: "gender", sortable: true, sortbyOrder: "desc" },
-  { label: "Age", accessor: "age", sortable: true },
-  { label: "Start date", accessor: "start_date", sortable: true },
-];
+// const columns = [
+//   { label: "Full Name", accessor: "full_name", sortable: true },
+//   { label: "Email", accessor: "email", sortable: false },
+//   { label: "Gender", accessor: "gender", sortable: true, sortbyOrder: "desc" },
+//   { label: "Age", accessor: "age", sortable: true },
+//   { label: "Start date", accessor: "start_date", sortable: true },
+// ];
+
+let columns = Object.keys(tableData1[0]).map((element) => ({
+  label: element,
+  accessor: element,
+  sortable: true,
+}));
+
+console.log(columns);
 
 const App = () => {
   return (
