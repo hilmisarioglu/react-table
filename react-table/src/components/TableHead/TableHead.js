@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState } from "react";
+import "./TableHead.css";
+
 const TableHead = ({ columns, handleSorting }) => {
-  const [sortField, setSortField] = useState('');
-  const [order, setOrder] = useState('asc');
+  const [sortField, setSortField] = useState("");
+  const [order, setOrder] = useState("asc");
 
   const handleSortingChange = (accessor) => {
     const sortOrder =
-      accessor === sortField && order === 'asc' ? 'desc' : 'asc';
+      accessor === sortField && order === "asc" ? "desc" : "asc";
     setSortField(accessor);
     setOrder(sortOrder);
     handleSorting(accessor, sortOrder);
@@ -13,15 +15,15 @@ const TableHead = ({ columns, handleSorting }) => {
 
   return (
     <thead>
-      <tr>
+      <tr className="thBlock">
         {columns.map(({ label, accessor, sortable }) => {
           const cl = sortable
-            ? sortField === accessor && order === 'asc'
-              ? 'up'
-              : sortField === accessor && order === 'desc'
-              ? 'down'
-              : 'default'
-            : '';
+            ? sortField === accessor && order === "asc"
+              ? "up"
+              : sortField === accessor && order === "desc"
+              ? "down"
+              : "default"
+            : "";
           return (
             <th
               key={accessor}
