@@ -1,19 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import './EditableTable.css';
+import React, { useState, useEffect, useMemo } from "react";
+import "./EditableTable.css";
 
-function EditableTable({ initialColumns = ['firstName', 'lastName', 'age'], initialData }) {
-    
+function EditableTable({
+  initialColumns = ["firstName", "lastName", "age"],
+  initialData,
+}) {
   const [data, setData] = useState(initialData);
-  const [filterText, setFilterText] = useState('');
+  const [filterText, setFilterText] = useState("");
   const [pageSize, setPageSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortConfig, setSortConfig] = useState(null);
   const [visibleColumns, setVisibleColumns] = useState(initialColumns);
+  const [isActive, setIsActive] = useState(false);
 
-  
   const filteredData = useMemo(() => {
-    return data.filter(row =>
-      visibleColumns.some(column =>
+    return data.filter((row) =>
+      visibleColumns.some((column) =>
         row[column].toString().toLowerCase().includes(filterText.toLowerCase())
       )
     );
@@ -22,8 +24,10 @@ function EditableTable({ initialColumns = ['firstName', 'lastName', 'age'], init
   const sortedData = useMemo(() => {
     if (!sortConfig) return filteredData;
     return [...filteredData].sort((a, b) => {
-      if (a[sortConfig.key] < b[sortConfig.key]) return sortConfig.direction === 'ascending' ? -1 : 1;
-      if (a[sortConfig.key] > b[sortConfig.key]) return sortConfig.direction === 'ascending' ? 1 : -1;
+      if (a[sortConfig.key] < b[sortConfig.key])
+        return sortConfig.direction === "ascending" ? -1 : 1;
+      if (a[sortConfig.key] > b[sortConfig.key])
+        return sortConfig.direction === "ascending" ? 1 : -1;
       return 0;
     });
   }, [filteredData, sortConfig]);
@@ -34,17 +38,21 @@ function EditableTable({ initialColumns = ['firstName', 'lastName', 'age'], init
   }, [sortedData, currentPage, pageSize]);
 
   const requestSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction = "ascending";
+    if (
+      sortConfig &&
+      sortConfig.key === key &&
+      sortConfig.direction === "ascending"
+    ) {
+      direction = "descending";
     }
     setSortConfig({ key, direction });
   };
 
   const toggleColumnVisibility = (column) => {
-    setVisibleColumns(current =>
+    setVisibleColumns((current) =>
       current.includes(column)
-        ? current.filter(c => c !== column)
+        ? current.filter((c) => c !== column)
         : [...current, column]
     );
   };
@@ -56,31 +64,50 @@ function EditableTable({ initialColumns = ['firstName', 'lastName', 'age'], init
           type="text"
           placeholder="Search..."
           value={filterText}
-          onChange={e => setFilterText(e.target.value)}
+          onChange={(e) => setFilterText(e.target.value)}
         />
-        <select value={pageSize} onChange={e => setPageSize(Number(e.target.value))}>
-          {[5, 10, 20].map(size => (
-            <option key={size} value={size}>{size}</option>
+        <select
+          value={pageSize}
+          onChange={(e) => setPageSize(Number(e.target.value))}
+        >
+          {[5, 10, 20].map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
           ))}
         </select>
-        {initialColumns.map(column => (
-          <label key={column}>
-            <input
-              type="checkbox"
-              checked={visibleColumns.includes(column)}
-              onChange={() => toggleColumnVisibility(column)}
-            />
-            {column}
-          </label>
-        ))}
+        <div
+          className={
+            isActive ? "checkbox-dropdown is-active" : "checkbox-dropdown"
+          }
+          onClick={() => setIsActive(!isActive)}
+        >
+          Select Column 
+          <ul className="checkbox-dropdown-list">
+            {initialColumns.map((column) => (
+              <li>
+                <label key={column}>
+                  <input
+                    type="checkbox"
+                    checked={visibleColumns.includes(column)}
+                    onChange={() => toggleColumnVisibility(column)}
+                  />
+                  {column}
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
       <table className="editable-table">
         <thead>
           <tr>
-            {visibleColumns.map(column => (
+            {visibleColumns.map((column) => (
               <th key={column} onClick={() => requestSort(column)}>
                 {column}
-                {sortConfig && sortConfig.key === column && (sortConfig.direction === 'ascending' ? ' 🔼' : ' 🔽')}
+                {sortConfig &&
+                  sortConfig.key === column &&
+                  (sortConfig.direction === "ascending" ? " 🔼" : " 🔽")}
               </th>
             ))}
           </tr>
@@ -88,7 +115,7 @@ function EditableTable({ initialColumns = ['firstName', 'lastName', 'age'], init
         <tbody>
           {paginatedData.map((row, index) => (
             <tr key={index}>
-              {visibleColumns.map(column => (
+              {visibleColumns.map((column) => (
                 <td key={column}>{row[column]}</td>
               ))}
             </tr>
@@ -96,8 +123,15 @@ function EditableTable({ initialColumns = ['firstName', 'lastName', 'age'], init
         </tbody>
       </table>
       <div>
-        {Array.from({ length: Math.ceil(sortedData.length / pageSize) }, (_, i) => i + 1).map(page => (
-          <button key={page} onClick={() => setCurrentPage(page)} disabled={currentPage === page}>
+        {Array.from(
+          { length: Math.ceil(sortedData.length / pageSize) },
+          (_, i) => i + 1
+        ).map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            disabled={currentPage === page}
+          >
             {page}
           </button>
         ))}
