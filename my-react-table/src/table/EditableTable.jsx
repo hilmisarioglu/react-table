@@ -4,8 +4,10 @@ import "./EditableTable.css";
 function EditableTable({
   initialColumns = ["firstName", "lastName", "age"],
   initialData,
+  editableColumns = ["firstName", "age"],
 }) {
   const [data, setData] = useState(initialData);
+  const [editStatus, setEditStatus] = useState({ rowKey: null, columnKey: null, value: "" });
   const [filterText, setFilterText] = useState("");
   const [pageSize, setPageSize] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,6 +57,25 @@ function EditableTable({
         ? current.filter((c) => c !== column)
         : [...current, column]
     );
+  };
+
+  const handleEdit = (rowIndex, columnKey, value) => {
+    setEditStatus({ rowKey: rowIndex, columnKey, value });
+  };
+
+  // Değişiklikleri kaydet
+  const saveEdit = (rowIndex, columnKey, newValue) => {
+    const newData = [...data];
+    newData[rowIndex][columnKey] = newValue;
+    setData(newData);
+    setEditStatus({ rowKey: null, columnKey: null, value: "" });
+  };
+
+  // Input alanından çıkıldığında veya Enter tuşuna basıldığında kaydet
+  const handleBlurOrEnter = (e, rowIndex, columnKey) => {
+    if (e.type === "blur" || e.key === "Enter") {
+      saveEdit(rowIndex, columnKey, e.target.value);
+    }
   };
 
   return (
@@ -113,10 +134,23 @@ function EditableTable({
           </tr>
         </thead>
         <tbody>
-          {paginatedData.map((row, index) => (
-            <tr key={index}>
-              {visibleColumns.map((column) => (
-                <td key={column}>{row[column]}</td>
+          {paginatedData.map((row, rowIndex) => (
+            <tr key={rowIndex}>
+              {visibleColumns.map((columnKey) => (
+                <td key={columnKey} onClick={() => editableColumns.includes(columnKey) && handleEdit(rowIndex, columnKey, row[columnKey])}>
+                  {editStatus.rowKey === rowIndex && editStatus.columnKey === columnKey ? (
+                    <input
+                      type="text"
+                      value={editStatus.value}
+                      onChange={(e) => setEditStatus({ ...editStatus, value: e.target.value })}
+                      onBlur={(e) => handleBlurOrEnter(e, rowIndex, columnKey)}
+                      onKeyDown={(e) => e.key === "Enter" && handleBlurOrEnter(e, rowIndex, columnKey)}
+                      autoFocus
+                    />
+                  ) : (
+                    row[columnKey]
+                  )}
+                </td>
               ))}
             </tr>
           ))}
