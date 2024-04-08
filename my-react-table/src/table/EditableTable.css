@@ -1,0 +1,92 @@
+/* EditableTable.css */
+.editable-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .editable-table th,
+  .editable-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .editable-table th {
+    background-color: #007bff;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  
+  .editable-table th:hover,
+  .editable-table th.sort-asc,
+  .editable-table th.sort-desc {
+    background-color: #0056b3;
+  }
+  
+  .editable-table tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .editable-cell {
+    cursor: pointer;
+    user-select: none;
+  }
+  
+  .input-cell {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .search-input,
+  .page-size-select {
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .column-visibility-controls {
+    margin: 10px 0;
+  }
+  
+  .column-visibility-controls label {
+    margin-right: 15px;
+    font-size: 14px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+  }
+  
+  .pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pagination button[disabled] {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
