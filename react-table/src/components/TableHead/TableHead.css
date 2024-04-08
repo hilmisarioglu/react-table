@@ -1,8 +1,0 @@
-.thBlock th {
-    border-top: 2px solid transparent;
-  }
-  
-  .thBlock th:hover {
-    border-top: 2px solid blue; 
-  }
-  
