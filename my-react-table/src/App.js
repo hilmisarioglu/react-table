@@ -139,23 +139,27 @@
 import { Table, Form } from "./components";
 import { PlusIcon } from "./components/Icons/Icons";
 import { useData } from "./hooks/useData";
+import { useAppSelector } from "./hooks/useStore";
 
 export default function App() {
   const {
     handleOpenModal,
     handleEditData,
+    handleDelete,
     FormEditData,
     onSubmit,
     isModalOpen,
-    handleCloseModal
+    handleCloseModal,
   } = useData();
-
+  const projects = useAppSelector((state) => state.projects);
   return (
     <div className="App">
       <Table
         openModal={handleOpenModal}
         closeModal={handleCloseModal}
         onEditData={handleEditData}
+        onDeleteData={handleDelete}
+        tableData={projects}
       />
       <button onClick={handleOpenModal} className="btn btn-primary">
         <PlusIcon />

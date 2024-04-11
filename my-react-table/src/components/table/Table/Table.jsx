@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from "react";
-import { useAppSelector } from "../../hooks/useStore";
-import { useStoreActions } from "../../hooks/useStoreActions";
-import { PencilIcon, TrashIcon } from "../Icons/Icons";
+import { useStoreActions } from "../../../hooks/useStoreActions";
+import { PencilIcon, TrashIcon } from "../../Icons/Icons";
 import "./Table.css";
+import THead from "../THead/THead";
+import { useEffect } from "react";
 
 function capitalize(str = "") {
   const firstChar = str.charAt(0).toUpperCase();
@@ -10,11 +11,35 @@ function capitalize(str = "") {
   return firstChar + rest;
 }
 
-export default function Table({ openModal, onEditData }) {
-  const projects = useAppSelector((state) => state.projects);
-  const { removeProject } = useStoreActions();
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "" });
+export default function Table({
+  openModal,
+  onEditData,
+  onDeleteData,
+  tableData,
+}) {
+  const projects = tableData;
+
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "",
+    sortable: false,
+  });
+
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleHeaderClick = (key) => {
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
+    }
+    let sortable = true;
+    columns.map((item) => {
+      if (item.id === key) {
+        sortable = item.sortable;
+      }
+    });
+    setSortConfig({ key, direction, sortable });
+  };
 
   const sortedProjects = useMemo(() => {
     let sortableProjects = [...projects];
@@ -29,6 +54,7 @@ export default function Table({ openModal, onEditData }) {
         return 0;
       });
     }
+
     return sortableProjects;
   }, [projects, sortConfig]);
 
@@ -41,36 +67,43 @@ export default function Table({ openModal, onEditData }) {
     );
   }, [sortedProjects, searchTerm]);
 
-  const requestSort = (key) => {
-    let direction = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    setSortConfig({ key, direction });
-  };
-
   const handleEditClick = (id) => {
     openModal();
     const data = projects.find((item) => item.id === id);
     onEditData(data);
   };
 
-  const handleDelete = (id) => {
-    removeProject(id);
-    alert("Project has been deleted");
-  };
-
-  // --------------------------
-
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
-  const pageOptions = [5, 10, 20]; 
+  const [columns, setColumns] = useState([]);
+  const pageOptions = [5, 10, 20];
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = filteredProjects.slice(firstItemIndex, lastItemIndex);
   const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
 
-  
+  useEffect(() => {
+    if (!projects || projects.length === 0) {
+      return [];
+    }
+    const firstProject = projects[0];
+    let keys = Object.keys(firstProject).map((key) => ({
+      id: key,
+      label: capitalize(key),
+      sortable: true,
+    }));
+    keys.push({ id: "actions", label: "Actions", sortable: false });
+    setColumns(keys);
+  }, [projects]);
+
+  const columnWidths = {
+    project: "40%",
+    description: "25%",
+    status: "15%",
+    actions: "20%",
+  };
+  const visibleColumns = ["project", "description", "status", "actions"];
+
   return (
     <div className="table-container">
       <div className="search-container">
@@ -93,35 +126,37 @@ export default function Table({ openModal, onEditData }) {
         </select>
       </div>
       <table className="table">
-        <thead>
+        <THead
+          columns={columns}
+          visibleColumns={visibleColumns}
+          columnWidths={columnWidths}
+          onHeaderClick={(key) => handleHeaderClick(key)}
+          columnActions={[]}
+          sortConfig={sortConfig}
+        />
+
+        {/* <thead>
           <tr>
-            <th onClick={() => requestSort("project")}>
-              Project
-              {sortConfig.key === "project" && (
-                <span>
-                  {sortConfig.direction === "ascending" ? " 🔼" : " 🔽"}
-                </span>
-              )}
-            </th>
-            <th onClick={() => requestSort("description")} className="expand">
-              Description
-              {sortConfig.key === "description" && (
-                <span>
-                  {sortConfig.direction === "ascending" ? " 🔼" : " 🔽"}
-                </span>
-              )}
-            </th>
-            <th onClick={() => requestSort("status")}>
-              Status
-              {sortConfig.key === "status" && (
-                <span>
-                  {sortConfig.direction === "ascending" ? " 🔼" : " 🔽"}
-                </span>
-              )}
-            </th>
-            <th>Actions</th>
+            {columnHeaderData.map(({ label, sortKey, isExpandable }) => (
+              <th
+                key={label}
+                onClick={() => requestSort(sortKey)}
+                className={isExpandable ? "expand" : ""}
+              >
+                {label}
+                {isExpandable && (
+                  <>
+                    {sortConfig.key === sortKey && (
+                      <span>
+                        {sortConfig.direction === "ascending" ? " 🔼" : " 🔽"}
+                      </span>
+                    )}
+                  </>
+                )}
+              </th>
+            ))}
           </tr>
-        </thead>
+        </thead> */}
         <tbody>
           {currentItems.map((project) => (
             <tr key={project.id}>
@@ -135,7 +170,7 @@ export default function Table({ openModal, onEditData }) {
               <td>
                 <span className="actions">
                   <button
-                    onClick={() => handleDelete(project.id)}
+                    onClick={() => onDeleteData(project.id)}
                     className="btn btn-delete"
                   >
                     <TrashIcon />

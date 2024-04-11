@@ -1,3 +1,3 @@
-export { default as Table } from "./Table/Table";
-export { default as Modal } from "./Modal/Modal";
-export { default as Form } from "./Form/Form";
+export { default as Table } from "./table/Table/Table";
+export { default as Modal } from "./modal/Modal";
+export { default as Form } from "./form/Form";

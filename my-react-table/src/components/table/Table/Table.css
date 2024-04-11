@@ -33,18 +33,18 @@
   display: none; 
 }
 .search-container select {
-  -webkit-appearance: none; /* Chrome, Safari, Opera */
-  -moz-appearance: none;    /* Firefox */
-  appearance: none;         /* Standart */
+  -webkit-appearance: none; 
+  -moz-appearance: none; 
+  appearance: none;      
 }
 
 
 .table {
-  display: block;
-  overflow: hidden;
-  table-layout: fixed;
-  border-collapse: collapse;
-  background-color: #fff;
+  /* display: block; */
+  /* overflow: hidden; */
+  /* table-layout: fixed; */
+  /* border-collapse: collapse; */
+  /* background-color: #fff; */
   border: 1px solid #eee;
   border-radius: 10px;
   white-space: nowrap;

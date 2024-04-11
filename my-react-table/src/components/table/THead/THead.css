@@ -1,0 +1,11 @@
+.table thead {
+    background-color: #e5e5e5;
+    color: #222;
+  }
+  
+  .table th {
+    padding: 0.8rem;
+    text-align: center;
+    border-bottom: 1px solid #ddd; 
+  }
+  

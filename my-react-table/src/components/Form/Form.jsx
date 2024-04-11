@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Modal } from "../";
+import { Modal } from "..";
 
 import "./Form.css";
 
@@ -7,18 +7,18 @@ const status = [
   {
     id: "1",
     literal: "Live",
-    value: "live"
+    value: "live",
   },
   {
     id: "2",
     literal: "Draft",
-    value: "draft"
+    value: "draft",
   },
   {
     id: "3",
     literal: "Done",
-    value: "done"
-  }
+    value: "done",
+  },
 ];
 
 export default function Form({ closeModal, dataToEdit, onSubmit }) {
@@ -26,7 +26,7 @@ export default function Form({ closeModal, dataToEdit, onSubmit }) {
     dataToEdit || {
       project: "",
       description: "",
-      status: "live"
+      status: "live",
     }
   );
 
@@ -40,7 +40,7 @@ export default function Form({ closeModal, dataToEdit, onSubmit }) {
     setFormState({
       project: "",
       description: "",
-      status: "live"
+      status: "live",
     });
   };
 

@@ -4,13 +4,19 @@ import { useStoreActions } from "./useStoreActions";
 export function useData() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [datatoEdit, setDataToEdit] = useState(null);
-  const { addProject, projectUpdated } = useStoreActions();
+  const { addProject, projectUpdated, removeProject } = useStoreActions();
 
   const handleCloseModal = () => setIsModalOpen(false);
+  
   const handleOpenModal = () => setIsModalOpen(true);
 
   const handleEditData = (data) => {
     setDataToEdit(data);
+  };
+
+  const handleDelete = (id) => {
+    removeProject(id);
+    alert("Project has been deleted");
   };
 
   const onSubmit = (formState) => {
@@ -34,6 +40,7 @@ export function useData() {
     handleCloseModal,
     onSubmit,
     handleEditData,
-    handleOpenModal
+    handleDelete,
+    handleOpenModal,
   };
 }
