@@ -1,11 +1,11 @@
-import React from "react";
 import PropTypes from "prop-types";
 import "./THead.css";
+import TableHeaderCell from "../TableHeaderCell/TableHeaderCell";
 
 function THead(props) {
   const {
     columns,
-    visibleColumns,
+    visibleColumns, 
     columnWidths,
     onHeaderClick,
     sortConfig,
@@ -14,38 +14,26 @@ function THead(props) {
   return (
     <thead>
       <tr>
-        {visibleColumns.map((key) => {
-          const column = columns.find((c) => c.id === key);
-          const style = { width: columnWidths[key] || column.width };
+        {visibleColumns.map((key, i) => {
+          const column = columns.find((c) => c.key === key);
+          const columnWidth =
+            column && columnWidths[key]
+              ? columnWidths[key]
+              : column
+              ? column.width
+              : "auto";
+
           const label = column?.label || "";
           const isSorted = sortConfig?.key === key;
 
           return (
-            <th
-              key={key}
-              data-column-id={key}
-              style={style}
-              onClick={() => {
-                if (column.sortable) {
-                  onHeaderClick(key);
-                }
-              }}
-            >
-              <div className="table-column-header">
-                <div
-                  className={`header-content ${
-                    !label ? "table-empty-header" : ""
-                  }`}
-                >
-                  {label}
-                  {isSorted && sortConfig.direction && (
-                    <span className="sort-icon">
-                      {sortConfig?.direction === "ascending" ? "▲" : "▼"}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </th>
+            <TableHeaderCell
+              key={i}
+              label={label}
+              columnWidth={columnWidth}
+              sortConfig={isSorted ? sortConfig : null}
+              onHeaderCellClick={() => onHeaderClick(key)}
+            />
           );
         })}
       </tr>
@@ -56,11 +44,11 @@ function THead(props) {
 THead.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      key: PropTypes.string,
       width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
       label: PropTypes.string,
     })
-  ).isRequired,
+  ),
   visibleColumns: PropTypes.arrayOf(PropTypes.string).isRequired,
   columnWidths: PropTypes.objectOf(
     PropTypes.oneOfType([PropTypes.string, PropTypes.number])
@@ -69,7 +57,7 @@ THead.propTypes = {
   sortConfig: PropTypes.shape({
     key: PropTypes.string,
     direction: PropTypes.oneOf(["ascending", "descending", ""]),
-  }).isRequired,
+  }),
 };
 
 export default THead;

@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from "react";
-import { useStoreActions } from "../../../hooks/useStoreActions";
-import { PencilIcon, TrashIcon } from "../../Icons/Icons";
 import "./Table.css";
 import THead from "../THead/THead";
 import { useEffect } from "react";
+import TBody from "../TBody/TBody";
+import TableRow from "../TableRow/TableRow";
 
 function capitalize(str = "") {
   const firstChar = str.charAt(0).toUpperCase();
@@ -29,12 +29,20 @@ export default function Table({
 
   const handleHeaderClick = (key) => {
     let direction = "ascending";
+    let sortable = true;
+
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
+    } else if (
+      sortConfig.key === key &&
+      sortConfig.direction === "descending"
+    ) {
+      direction = "";
+      key = null;
     }
-    let sortable = true;
-    columns.map((item) => {
-      if (item.id === key) {
+
+    columns.forEach((item) => {
+      if (item.key === key) {
         sortable = item.sortable;
       }
     });
@@ -87,13 +95,17 @@ export default function Table({
       return [];
     }
     const firstProject = projects[0];
-    let keys = Object.keys(firstProject).map((key) => ({
-      id: key,
+    let objects = Object.keys(firstProject).map((key) => ({
+      key: key,
       label: capitalize(key),
       sortable: true,
     }));
-    keys.push({ id: "actions", label: "Actions", sortable: false });
-    setColumns(keys);
+    objects.push({
+      key: "actions",
+      label: "Actions",
+      sortable: false,
+    });
+    setColumns(objects);
   }, [projects]);
 
   const columnWidths = {
@@ -102,8 +114,11 @@ export default function Table({
     status: "15%",
     actions: "20%",
   };
-  const visibleColumns = ["project", "description", "status", "actions"];
+  const visibleColumns = ["id","project", "description", "status", "actions"];
 
+  if (!projects) {
+    return <div>Loading</div>;
+  }
   return (
     <div className="table-container">
       <div className="search-container">
@@ -130,62 +145,20 @@ export default function Table({
           columns={columns}
           visibleColumns={visibleColumns}
           columnWidths={columnWidths}
-          onHeaderClick={(key) => handleHeaderClick(key)}
-          columnActions={[]}
+          onHeaderClick={handleHeaderClick}
           sortConfig={sortConfig}
         />
-
-        {/* <thead>
-          <tr>
-            {columnHeaderData.map(({ label, sortKey, isExpandable }) => (
-              <th
-                key={label}
-                onClick={() => requestSort(sortKey)}
-                className={isExpandable ? "expand" : ""}
-              >
-                {label}
-                {isExpandable && (
-                  <>
-                    {sortConfig.key === sortKey && (
-                      <span>
-                        {sortConfig.direction === "ascending" ? " 🔼" : " 🔽"}
-                      </span>
-                    )}
-                  </>
-                )}
-              </th>
-            ))}
-          </tr>
-        </thead> */}
-        <tbody>
-          {currentItems.map((project) => (
-            <tr key={project.id}>
-              <td>{project.project}</td>
-              <td>{project.description}</td>
-              <td>
-                <span className={`label label-${project.status}`}>
-                  {capitalize(project.status)}
-                </span>
-              </td>
-              <td>
-                <span className="actions">
-                  <button
-                    onClick={() => onDeleteData(project.id)}
-                    className="btn btn-delete"
-                  >
-                    <TrashIcon />
-                  </button>
-                  <button
-                    onClick={() => handleEditClick(project.id)}
-                    className="btn btn-edit"
-                  >
-                    <PencilIcon />
-                  </button>
-                </span>
-              </td>
-            </tr>
+        <TBody>
+          {currentItems.map((project, i) => (
+            <TableRow
+              key={i}
+              rowData={project}
+              columns={columns.filter(column => visibleColumns.includes(column.key))}
+              onDeleteData={onDeleteData}
+              handleEditClick={handleEditClick}
+            />
           ))}
-        </tbody>
+        </TBody>
         <div className="pagination">
           <button
             className="page-button"

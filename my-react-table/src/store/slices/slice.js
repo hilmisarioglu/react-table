@@ -153,16 +153,9 @@ const DEFAULT_STATE = [
     },
   ]
 
-const initialState = (() => {
-  const getLocalStorageData = window.localStorage.getItem("ReduxState_");
-  return getLocalStorageData
-    ? JSON.parse(getLocalStorageData).pages
-    : DEFAULT_STATE;
-})();
-
 export const projectsSlice = createSlice({
   name: "projects",
-  initialState,
+  initialState : DEFAULT_STATE,
   reducers: {
     createProject: (state, action) => {
       const id = crypto.randomUUID();
