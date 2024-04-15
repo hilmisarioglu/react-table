@@ -19,20 +19,21 @@ function TableRow({ rowData, columns, onRowClick, onDeleteData, handleEditClick 
   return (
     <tr onClick={handleClick}>
       {columns.map((column) => (
-        <TableCell key={column.key} width={column.width}>
-          {column.key === 'actions' ? (
-            <div className="actions">
-              <button onClick={() => onDeleteData(rowData.id)} className="btn btn-delete">
-                <TrashIcon />
-              </button>
-              <button onClick={() => handleEditClick(rowData.id)} className="btn btn-edit">
-                <PencilIcon />
-              </button>
-            </div>
-          ) : (
-            column.key === 'status' ? capitalize(rowData[column.key]) : rowData[column.key]
-          )}
-        </TableCell>
+        <TableCell key={column.key} width={column.width} text={capitalize(rowData[column.key])}/>
+        // <TableCell key={column.key} width={column.width}>
+        //   {column.key === 'actions' ? (
+        //     <div className="actions">
+        //       <button onClick={() => onDeleteData(rowData.id)} className="btn btn-delete">
+        //         <TrashIcon />
+        //       </button>
+        //       <button onClick={() => handleEditClick(rowData.id)} className="btn btn-edit">
+        //         <PencilIcon />
+        //       </button>
+        //     </div>
+        //   ) : (
+        //     column.key === 'status' ? capitalize(rowData[column.key]) : rowData[column.key]
+        //   )}
+        // </TableCell>
       ))}
     </tr>
   );

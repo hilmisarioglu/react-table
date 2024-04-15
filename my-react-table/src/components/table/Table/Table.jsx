@@ -100,21 +100,15 @@ export default function Table({
       label: capitalize(key),
       sortable: true,
     }));
-    objects.push({
-      key: "actions",
-      label: "Actions",
-      sortable: false,
-    });
     setColumns(objects);
   }, [projects]);
 
   const columnWidths = {
     project: "40%",
-    description: "25%",
-    status: "15%",
-    actions: "20%",
+    description: "40%",
+    status: "20%",
   };
-  const visibleColumns = ["id","project", "description", "status", "actions"];
+  const visibleColumns = ["project", "description", "status"];
 
   if (!projects) {
     return <div>Loading</div>;
@@ -153,40 +147,42 @@ export default function Table({
             <TableRow
               key={i}
               rowData={project}
-              columns={columns.filter(column => visibleColumns.includes(column.key))}
+              columns={columns.filter((column) =>
+                visibleColumns.includes(column.key)
+              )}
               onDeleteData={onDeleteData}
               handleEditClick={handleEditClick}
             />
           ))}
         </TBody>
-        <div className="pagination">
-          <button
-            className="page-button"
-            onClick={() => setCurrentPage(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button
-              key={index + 1}
-              className={`page-button ${
-                currentPage === index + 1 ? "active" : ""
-              }`}
-              onClick={() => setCurrentPage(index + 1)}
-            >
-              {index + 1}
-            </button>
-          ))}
-          <button
-            className="page-button"
-            onClick={() => setCurrentPage(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
       </table>
+      <div className="pagination">
+        <button
+          className="page-button"
+          onClick={() => setCurrentPage(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            className={`page-button ${
+              currentPage === index + 1 ? "active" : ""
+            }`}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+        <button
+          className="page-button"
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 }

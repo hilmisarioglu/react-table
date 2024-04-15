@@ -97,10 +97,7 @@
   background-color: #ef4444;
 }
 
-.actions {
-  display: flex;
-  gap: 1rem;
-}
+
 
 .btn {
   border: none;
