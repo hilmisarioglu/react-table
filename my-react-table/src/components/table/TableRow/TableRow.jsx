@@ -8,13 +8,9 @@ function capitalize(str = "") {
   return firstChar + rest;
 }
 
-function TableRow({
-  rowData,
-  columns,
-  onRowClick,
-  onDeleteData,
-  handleEditCellClick,
-}) {
+function TableRow(props) {
+  const { rowData, columns, onRowClick, onDeleteData, handleEditCellClick, settings } =
+    props;
   const handleClick = (event) => {
     if (onRowClick) {
       onRowClick(rowData.id, event);
@@ -31,6 +27,7 @@ function TableRow({
           onEditCell={handleEditCellClick}
           rowId={rowData.id}
           columnKey={column.key}
+          isEditable={settings.editableColumns.includes(column.key)}
         />
       ))}
     </tr>
@@ -49,6 +46,7 @@ TableRow.propTypes = {
   onDeleteData: PropTypes.func,
   handleEditCellClick: PropTypes.func,
   onRowClick: PropTypes.func,
+  settings: PropTypes.object,
 };
 
 export default TableRow;

@@ -4,13 +4,13 @@ import "./TableCell.css";
 import { PencilIcon } from "../../Icons/Icons";
 
 const TableCell = (props) => {
-  const { width, content, rowId, columnKey, onDeleteData, onEditCell } = props;
-  const [isEditable, setIsEditable] = useState(false);
+  const { width, content, rowId, columnKey, onDeleteData, onEditCell, isEditable} = props;
+  const [isCurrentlyEdited, setIsCurrentlyEdited] = useState(false);
   const [editValue, setEditValue] = useState(content);
   const [hover, setHover] = useState(false);
 
   const toggleEdit = () => {
-    setIsEditable(true);
+    setIsCurrentlyEdited(true);
     setHover(true);
   };
 
@@ -22,7 +22,7 @@ const TableCell = (props) => {
     if (editValue !== content) {
       onEditCell(editValue, rowId, columnKey);
     }
-    setIsEditable(false);
+    setIsCurrentlyEdited(false);
   };
 
   const handleKeyDown = (e) => {
@@ -42,7 +42,7 @@ const TableCell = (props) => {
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
-      {isEditable ? (
+      {isCurrentlyEdited ? (
         <input
           type="text"
           value={editValue}
@@ -52,9 +52,9 @@ const TableCell = (props) => {
           autoFocus
         />
       ) : (
-        <div onClick={toggleEdit}>
+        <div>
           {content}
-          {hover && !isEditable && (
+          {hover && !isCurrentlyEdited && isEditable && (
             <span className="edit-icon" onClick={toggleEdit}>
               <PencilIcon />
             </span>
@@ -73,6 +73,7 @@ TableCell.propTypes = {
   content: PropTypes.string.isRequired,
   onDeleteData: PropTypes.func,
   onEditCell: PropTypes.func,
+  isEditable: PropTypes.bool,
 };
 
 export default TableCell;

@@ -151,7 +151,8 @@ export default function App() {
     isModalOpen,
     handleCloseModal,
   } = useData();
-  const projects = useAppSelector((state) => state.projects);
+  const data = useAppSelector((state) => state.projects.objects);
+  const settings = useAppSelector((state) => state.projects.settings);
   return (
     <div className="App">
       <Table
@@ -159,7 +160,8 @@ export default function App() {
         closeModal={handleCloseModal}
         onEditData={handleEditData}
         onDeleteData={handleDelete}
-        tableData={projects}
+        tableData={data}
+        settings={settings}
       />
       <button onClick={handleOpenModal} className="btn btn-primary">
         <PlusIcon />

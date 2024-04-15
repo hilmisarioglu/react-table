@@ -11,14 +11,9 @@ function capitalize(str = "") {
   return firstChar + rest;
 }
 
-export default function Table({
-  openModal,
-  onEditData,
-  onDeleteData,
-  tableData,
-}) {
+export default function Table(props) {
+  const { openModal, onEditData, onDeleteData, tableData, settings } = props;
   const projects = tableData;
-
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "",
@@ -26,10 +21,9 @@ export default function Table({
   });
 
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [visibleColumns, setVisibleColumns] = useState([]);
   const handleHeaderClick = (key) => {
     let direction = "ascending";
-    let sortable = true;
 
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
@@ -40,18 +34,16 @@ export default function Table({
       direction = "";
       key = null;
     }
-
-    columns.forEach((item) => {
-      if (item.key === key) {
-        sortable = item.sortable;
-      }
-    });
-    setSortConfig({ key, direction, sortable });
+    setSortConfig({ key, direction });
   };
 
-  const sortedProjects = useMemo(() => {
+  const sortedObjects = useMemo(() => {
     let sortableProjects = [...projects];
-    if (sortConfig.key !== null) {
+    if (
+      sortConfig.key &&
+      settings[0].sortableColumns.includes(sortConfig.key)
+    ) {
+      console.log("true");
       sortableProjects.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "ascending" ? -1 : 1;
@@ -62,63 +54,45 @@ export default function Table({
         return 0;
       });
     }
-
     return sortableProjects;
-  }, [projects, sortConfig]);
+  }, [projects, sortConfig, settings]);
 
-  const filteredProjects = useMemo(() => {
-    return sortedProjects.filter(
-      (project) =>
-        project.project.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        project.status.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredObjects = useMemo(() => {
+    return sortedObjects.filter(
+      (obj) =>
+        visibleColumns.some((column) =>
+          obj[column].toLowerCase().includes(searchTerm.toLowerCase())
+        )
     );
-  }, [sortedProjects, searchTerm]);
+  }, [sortedObjects, searchTerm, settings, visibleColumns]);
 
   const handleEditCellClick = (newValue, id, key) => {
-    // openModal();
-    // const data = projects.find((item) => item.id === id);
-    // onEditData(data);
-
     const data = projects.find((item) => item.id === id);
-    const formState = { ...data, [key]: newValue }
+    const formState = { ...data, [key]: newValue };
     onEditData(formState);
-    // const updatedData = projects.map((project) => {
-    //   if (project.id === id) {
-    //     return { ...project, [key]: newValue };
-    //   }
-    //   return project;
-    // });
   };
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [columns, setColumns] = useState([]);
-  const pageOptions = [5, 10, 20];
+  const pageOptions = settings[0].pageOptions;
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
-  const currentItems = filteredProjects.slice(firstItemIndex, lastItemIndex);
-  const totalPages = Math.ceil(filteredProjects.length / itemsPerPage);
+  const currentItems = filteredObjects.slice(firstItemIndex, lastItemIndex);
+  const totalPages = Math.ceil(filteredObjects.length / itemsPerPage);
 
   useEffect(() => {
-    if (!projects || projects.length === 0) {
-      return [];
+    if (settings) {
+      setColumns(settings[0].columns);
+      setVisibleColumns(settings[0].visibleColumns);
     }
-    const firstProject = projects[0];
-    let objects = Object.keys(firstProject).map((key) => ({
-      key: key,
-      label: capitalize(key),
-      sortable: true,
-    }));
-    setColumns(objects);
-  }, [projects]);
+  }, [settings]);
 
   const columnWidths = {
     project: "40%",
     description: "40%",
     status: "20%",
   };
-  const visibleColumns = ["project", "description", "status"];
 
   if (!projects) {
     return <div>Loading</div>;
@@ -151,6 +125,7 @@ export default function Table({
           columnWidths={columnWidths}
           onHeaderClick={handleHeaderClick}
           sortConfig={sortConfig}
+          settings={settings[0]}
         />
         <TBody>
           {currentItems.map((project, i) => (
@@ -162,6 +137,7 @@ export default function Table({
               )}
               onDeleteData={onDeleteData}
               handleEditCellClick={handleEditCellClick}
+              settings={settings[0]}
             />
           ))}
         </TBody>

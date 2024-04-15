@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import "./TableHeaderCell.css";
 
 const TableHeaderCell = (props) => {
-  const { label, columnWidth, sortConfig, onHeaderCellClick } = props;
+  const { label, columnWidth, sortConfig, onHeaderCellClick,showSortArrowIcon } = props;
 
   const getSortIcon = () => {
-    if (!sortConfig || !sortConfig.direction || !sortConfig.sortable)
+    if (!sortConfig || !sortConfig.direction || !showSortArrowIcon)
       return null;
     return sortConfig.direction === "ascending" ? "▲" : "▼";
   };
@@ -33,6 +33,7 @@ TableHeaderCell.propTypes = {
     key: PropTypes.string,
     direction: PropTypes.oneOf(["ascending", "descending"]),
   }),
+  showSortArrowIcon: PropTypes.bool,
 };
 
 export default TableHeaderCell;

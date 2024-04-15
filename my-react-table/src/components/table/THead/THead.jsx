@@ -9,6 +9,7 @@ function THead(props) {
     columnWidths,
     onHeaderClick,
     sortConfig,
+    settings
   } = props;
 
   return (
@@ -22,7 +23,6 @@ function THead(props) {
               : column
               ? column.width
               : "auto";
-
           const label = column?.label || "";
           const isSorted = sortConfig?.key === key;
 
@@ -33,6 +33,7 @@ function THead(props) {
               columnWidth={columnWidth}
               sortConfig={isSorted ? sortConfig : null}
               onHeaderCellClick={() => onHeaderClick(key)}
+              showSortArrowIcon={settings.sortableColumns.includes(column.key)}
             />
           );
         })}
@@ -58,6 +59,7 @@ THead.propTypes = {
     key: PropTypes.string,
     direction: PropTypes.oneOf(["ascending", "descending", ""]),
   }),
+  settings: PropTypes.object,
 };
 
 export default THead;

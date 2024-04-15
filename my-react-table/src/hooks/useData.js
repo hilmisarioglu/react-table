@@ -23,7 +23,6 @@ export function useData() {
 
   const onSubmit = (formState) => {
     if (datatoEdit !== null) {
-      console.log("formState2", formState);
       projectUpdated(formState);
       handleCloseModal();
       alert("Project Updated Successfully");
