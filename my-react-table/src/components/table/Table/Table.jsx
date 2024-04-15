@@ -4,12 +4,7 @@ import THead from "../THead/THead";
 import { useEffect } from "react";
 import TBody from "../TBody/TBody";
 import TableRow from "../TableRow/TableRow";
-
-function capitalize(str = "") {
-  const firstChar = str.charAt(0).toUpperCase();
-  const rest = str.slice(1);
-  return firstChar + rest;
-}
+import { TrashIcon } from "../../Icons/Icons";
 
 export default function Table(props) {
   const { openModal, onEditData, onDeleteData, tableData, settings } = props;
@@ -19,9 +14,10 @@ export default function Table(props) {
     direction: "",
     sortable: false,
   });
-
   const [searchTerm, setSearchTerm] = useState("");
   const [visibleColumns, setVisibleColumns] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
+
   const handleHeaderClick = (key) => {
     let direction = "ascending";
 
@@ -43,7 +39,6 @@ export default function Table(props) {
       sortConfig.key &&
       settings[0].sortableColumns.includes(sortConfig.key)
     ) {
-      console.log("true");
       sortableProjects.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
           return sortConfig.direction === "ascending" ? -1 : 1;
@@ -58,11 +53,10 @@ export default function Table(props) {
   }, [projects, sortConfig, settings]);
 
   const filteredObjects = useMemo(() => {
-    return sortedObjects.filter(
-      (obj) =>
-        visibleColumns.some((column) =>
-          obj[column].toLowerCase().includes(searchTerm.toLowerCase())
-        )
+    return sortedObjects.filter((obj) =>
+      visibleColumns.some((column) =>
+        obj[column].toLowerCase().includes(searchTerm.toLowerCase())
+      )
     );
   }, [sortedObjects, searchTerm, settings, visibleColumns]);
 
@@ -94,6 +88,27 @@ export default function Table(props) {
     status: "20%",
   };
 
+  const handleRowSelect = (id) => {
+    if (selectedRows.includes(id)) {
+      setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
+    } else {
+      setSelectedRows([...selectedRows, id]);
+    }
+  };
+
+  const handleSelectAllToggle = () => {
+    if (selectedRows.length === projects.length) {
+      setSelectedRows([]);
+    } else {
+      const newSelection = projects.map((project) => project.id);
+      setSelectedRows(newSelection);
+    }
+  };
+
+  useEffect(() => {
+    console.log("selectedRows", selectedRows);
+  }, [selectedRows]);
+
   if (!projects) {
     return <div>Loading</div>;
   }
@@ -118,6 +133,14 @@ export default function Table(props) {
           ))}
         </select>
       </div>
+      <div className="select-delete-container">
+        <span>
+          {selectedRows.length} Row
+          {!selectedRows.length || selectedRows.length > 1 ? "s " : " "}
+          Selected
+        </span>{" "}
+        <TrashIcon />
+      </div>
       <table className="table">
         <THead
           columns={columns}
@@ -126,18 +149,22 @@ export default function Table(props) {
           onHeaderClick={handleHeaderClick}
           sortConfig={sortConfig}
           settings={settings[0]}
+          areAllSelected={selectedRows.length === projects.length}
+          handleSelectAllToggle={handleSelectAllToggle}
         />
         <TBody>
-          {currentItems.map((project, i) => (
+          {currentItems.map((item, i) => (
             <TableRow
-              key={i}
-              rowData={project}
+              key={item.id}
+              rowData={item}
               columns={columns.filter((column) =>
                 visibleColumns.includes(column.key)
               )}
               onDeleteData={onDeleteData}
               handleEditCellClick={handleEditCellClick}
               settings={settings[0]}
+              isSelected={selectedRows.includes(item.id)}
+              onRowSelect={handleRowSelect}
             />
           ))}
         </TBody>

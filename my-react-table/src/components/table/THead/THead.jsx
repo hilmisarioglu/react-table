@@ -5,16 +5,25 @@ import TableHeaderCell from "../TableHeaderCell/TableHeaderCell";
 function THead(props) {
   const {
     columns,
-    visibleColumns, 
+    visibleColumns,
     columnWidths,
     onHeaderClick,
     sortConfig,
-    settings
+    settings,
+    areAllSelected,
+    handleSelectAllToggle,
   } = props;
 
   return (
     <thead>
       <tr>
+        <th>
+          <input
+            type="checkbox"
+            checked={areAllSelected}
+            onChange={handleSelectAllToggle}
+          />
+        </th>
         {visibleColumns.map((key, i) => {
           const column = columns.find((c) => c.key === key);
           const columnWidth =
@@ -60,6 +69,8 @@ THead.propTypes = {
     direction: PropTypes.oneOf(["ascending", "descending", ""]),
   }),
   settings: PropTypes.object,
+  areAllSelected: PropTypes.bool,
+  handleSelectAllToggle: PropTypes.func,
 };
 
 export default THead;

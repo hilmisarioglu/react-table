@@ -9,8 +9,16 @@ function capitalize(str = "") {
 }
 
 function TableRow(props) {
-  const { rowData, columns, onRowClick, onDeleteData, handleEditCellClick, settings } =
-    props;
+  const {
+    rowData,
+    columns,
+    onRowClick,
+    onDeleteData,
+    handleEditCellClick,
+    settings,
+    isSelected,
+    onRowSelect,
+  } = props;
   const handleClick = (event) => {
     if (onRowClick) {
       onRowClick(rowData.id, event);
@@ -18,6 +26,13 @@ function TableRow(props) {
   };
   return (
     <tr onClick={handleClick}>
+      <td>
+        <input
+          type="checkbox"
+          checked={isSelected}
+          onChange={() => onRowSelect(rowData.id)}
+        />
+      </td>
       {columns.map((column) => (
         <TableCell
           key={column.key}

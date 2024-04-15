@@ -38,13 +38,18 @@
   appearance: none;      
 }
 
+.select-delete-container{
+  max-width: 80%;
+  margin: auto;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap:10px;
+  margin-bottom: 8px;
+}
+
 
 .table {
-  /* display: block; */
-  /* overflow: hidden; */
-  /* table-layout: fixed; */
-  /* border-collapse: collapse; */
-  /* background-color: #fff; */
   border: 1px solid #eee;
   white-space: nowrap;
   width: 100em;
