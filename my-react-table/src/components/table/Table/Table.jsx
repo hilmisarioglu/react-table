@@ -75,10 +75,20 @@ export default function Table({
     );
   }, [sortedProjects, searchTerm]);
 
-  const handleEditClick = (id) => {
-    openModal();
+  const handleEditCellClick = (newValue, id, key) => {
+    // openModal();
+    // const data = projects.find((item) => item.id === id);
+    // onEditData(data);
+
     const data = projects.find((item) => item.id === id);
-    onEditData(data);
+    const formState = { ...data, [key]: newValue }
+    onEditData(formState);
+    // const updatedData = projects.map((project) => {
+    //   if (project.id === id) {
+    //     return { ...project, [key]: newValue };
+    //   }
+    //   return project;
+    // });
   };
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -151,7 +161,7 @@ export default function Table({
                 visibleColumns.includes(column.key)
               )}
               onDeleteData={onDeleteData}
-              handleEditClick={handleEditClick}
+              handleEditCellClick={handleEditCellClick}
             />
           ))}
         </TBody>

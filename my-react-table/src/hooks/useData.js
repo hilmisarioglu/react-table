@@ -7,11 +7,13 @@ export function useData() {
   const { addProject, projectUpdated, removeProject } = useStoreActions();
 
   const handleCloseModal = () => setIsModalOpen(false);
-  
+
   const handleOpenModal = () => setIsModalOpen(true);
 
-  const handleEditData = (data) => {
-    setDataToEdit(data);
+  const handleEditData = (formState) => {
+    projectUpdated(formState);
+    alert("Project Updated Successfully");
+    setDataToEdit(null);
   };
 
   const handleDelete = (id) => {
@@ -21,6 +23,7 @@ export function useData() {
 
   const onSubmit = (formState) => {
     if (datatoEdit !== null) {
+      console.log("formState2", formState);
       projectUpdated(formState);
       handleCloseModal();
       alert("Project Updated Successfully");

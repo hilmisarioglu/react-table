@@ -1,0 +1,13 @@
+.table-cell{
+    position: relative;
+    padding: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.edit-icon{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    margin-left: 8px;
+}
