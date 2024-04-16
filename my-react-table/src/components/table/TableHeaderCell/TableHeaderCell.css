@@ -1,3 +1,8 @@
-.table-column-header{
-    text-align: left;
-}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* İçerikleri sağa ve sola yaslar */
+    align-items: center; /* İçerikleri dikey olarak ortalar */
+    width: 100%; /* Header genişliği tam sütun genişliği olsun */
+  }
+  
