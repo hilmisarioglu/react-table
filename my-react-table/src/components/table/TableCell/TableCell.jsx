@@ -4,7 +4,15 @@ import "./TableCell.css";
 import { PencilIcon } from "../../Icons/Icons";
 
 const TableCell = (props) => {
-  const { width, content, rowId, columnKey, onDeleteData, onEditCell, isEditable} = props;
+  const {
+    width,
+    content,
+    rowId,
+    columnKey,
+    onDeleteData,
+    onEditCell,
+    isEditable,
+  } = props;
   const [isCurrentlyEdited, setIsCurrentlyEdited] = useState(false);
   const [editValue, setEditValue] = useState(content);
   const [hover, setHover] = useState(false);
@@ -53,8 +61,8 @@ const TableCell = (props) => {
         />
       ) : (
         <div className="table-content">
-          {content}
-          {hover && !isCurrentlyEdited && isEditable && (
+          <span className="table-content-text">{content}</span>
+          {hover && isEditable && (
             <span className="edit-icon" onClick={toggleEdit}>
               <PencilIcon />
             </span>

@@ -18,11 +18,15 @@ function THead(props) {
     <thead>
       <tr>
         <th>
-          <input
-            type="checkbox"
-            checked={areAllSelected}
-            onChange={handleSelectAllToggle}
-          />
+          <div className="table-column-header">
+            <div>
+              <input
+                type="checkbox"
+                checked={areAllSelected}
+                onChange={handleSelectAllToggle}
+              />
+            </div>
+          </div>
         </th>
         {visibleColumns.map((key, i) => {
           const column = columns.find((c) => c.key === key);

@@ -12,17 +12,14 @@ const TableHeaderCell = (props) => {
     showSortArrowIcon,
   } = props;
 
-  const getSortIcon = () => {
-    if (!showSortArrowIcon) {
-      return null;
-    }
-
-    if (!sortConfig) {
-      return <UpDown />;
-    }
-
-    return sortConfig.direction === "ascending" ? <Down /> : <Up />;
-  };
+  const getSortIcon = () =>
+    !showSortArrowIcon ? null : !sortConfig ? (
+      <UpDown />
+    ) : sortConfig.direction === "ascending" ? (
+      <Down />
+    ) : (
+      <Up />
+    );
 
   const sortIcon = getSortIcon();
 

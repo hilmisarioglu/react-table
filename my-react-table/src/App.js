@@ -25,7 +25,7 @@ export default function App() {
         tableData={data}
         settings={settings}
       />
-      <button onClick={handleOpenModal} className="btn btn-primary">
+      {/* <button onClick={handleOpenModal} className="btn btn-primary">
         <PlusIcon />
         Create
       </button>
@@ -35,7 +35,7 @@ export default function App() {
           dataToEdit={FormEditData}
           onSubmit={onSubmit}
         />
-      )}
+      )} */}
     </div>
   );
 }

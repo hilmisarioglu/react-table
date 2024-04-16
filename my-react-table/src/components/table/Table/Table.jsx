@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import TBody from "../TBody/TBody";
 import TableRow from "../TableRow/TableRow";
 import { TrashIcon } from "../../Icons/Icons";
+import Pagination from "../../pagination/Pagination";
+import Dropdown from "../../dropdown/Dropdown";
 
 export default function Table(props) {
   const { openModal, onEditData, onDeleteData, tableData, settings } = props;
@@ -127,26 +129,6 @@ export default function Table(props) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <select
-          value={itemsPerPage}
-          onChange={(e) => setItemsPerPage(Number(e.target.value))}
-        >
-          {pageOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="select-delete-container">
-        <span>
-          {selectedRows.length} Row
-          {!selectedRows.length || selectedRows.length > 1 ? "s " : " "}
-          Selected
-        </span>{" "}
-        <div onClick={handleDeleteSelected}>
-          <TrashIcon />
-        </div>
       </div>
       <table className="table">
         <THead
@@ -176,32 +158,29 @@ export default function Table(props) {
           ))}
         </TBody>
       </table>
-      <div className="pagination">
-        <button
-          className="page-button"
-          onClick={() => setCurrentPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index + 1}
-            className={`page-button ${
-              currentPage === index + 1 ? "active" : ""
-            }`}
-            onClick={() => setCurrentPage(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
-        <button
-          className="page-button"
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
+      <div className="footer-pagination">
+        <div className="select-delete-container">
+          <span>
+            {selectedRows.length} Row
+            {!selectedRows.length || selectedRows.length > 1 ? "s " : " "}
+            Selected
+          </span>{" "}
+          <div onClick={handleDeleteSelected}>
+            <TrashIcon />
+          </div>
+        </div>
+        <div className="pagination-dropdown-container">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+          <Dropdown
+            itemsPerPage={itemsPerPage}
+            setItemsPerPage={setItemsPerPage}
+            pageOptions={pageOptions}
+          />
+        </div>
       </div>
     </div>
   );

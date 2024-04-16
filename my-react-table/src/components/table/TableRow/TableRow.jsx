@@ -25,13 +25,20 @@ function TableRow(props) {
     }
   };
   return (
-    <tr onClick={handleClick}>
+    <tr
+      className={`table-row ${isSelected ? "selected-row" : ""}`}
+      onClick={handleClick}
+    >
       <td>
-        <input
-          type="checkbox"
-          checked={isSelected}
-          onChange={() => onRowSelect(rowData.id)}
-        />
+        <div className="table-row-container">
+          <div>
+            <input
+              type="checkbox"
+              checked={isSelected}
+              onChange={() => onRowSelect(rowData.id)}
+            />
+          </div>
+        </div>
       </td>
       {columns.map((column) => (
         <TableCell
