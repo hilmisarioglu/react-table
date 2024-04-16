@@ -194,8 +194,14 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  gap:10px;
+  gap:5px;
 }
+
+.select-delete-container > div > svg {
+  vertical-align: middle;
+}
+
+
 
 .input-container {
   flex-grow: 1;
