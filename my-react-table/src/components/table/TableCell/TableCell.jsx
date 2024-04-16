@@ -52,7 +52,7 @@ const TableCell = (props) => {
           autoFocus
         />
       ) : (
-        <div>
+        <div className="table-content">
           {content}
           {hover && !isCurrentlyEdited && isEditable && (
             <span className="edit-icon" onClick={toggleEdit}>

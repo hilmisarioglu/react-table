@@ -1,14 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./TableHeaderCell.css";
+import { Up, Down, UpDown } from "../../Icons/Icons";
 
 const TableHeaderCell = (props) => {
-  const { label, columnWidth, sortConfig, onHeaderCellClick,showSortArrowIcon } = props;
+  const {
+    label,
+    columnWidth,
+    sortConfig,
+    onHeaderCellClick,
+    showSortArrowIcon,
+  } = props;
 
+  console.log('sortConfig',sortConfig);
+  console.log('showSortArrowIcon',showSortArrowIcon);
   const getSortIcon = () => {
-    if (!sortConfig || !sortConfig.direction || !showSortArrowIcon)
-      return null;
-    return sortConfig.direction === "ascending" ? "▲" : "▼";
+    if (showSortArrowIcon) return <UpDown/>;
+    else if (!sortConfig || !sortConfig.direction || !showSortArrowIcon) return null;
+    return sortConfig.direction === "ascending" ? <Up/> : <Down/>;
   };
 
   const sortIcon = getSortIcon();

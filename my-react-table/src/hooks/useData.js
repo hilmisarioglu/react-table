@@ -18,7 +18,7 @@ export function useData() {
 
   const handleDelete = (id) => {
     removeProject(id);
-    alert("Project has been deleted");
+    // alert("Project has been deleted");
   };
 
   const onSubmit = (formState) => {

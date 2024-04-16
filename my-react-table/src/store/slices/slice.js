@@ -194,8 +194,8 @@ export const projectsSlice = createSlice({
       state.objects.push({ id, ...action.payload });
     },
     deleteProject: (state, action) => {
-      const id = action.payload;
-      return state.objects.filter((item) => item.id !== id);
+      const ids = action.payload;
+      state.objects = state.objects.filter((item) => !ids.includes(item.id));
     },
     updateProject: (state, action) => {
       const id = action.payload.id;

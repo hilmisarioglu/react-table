@@ -8,7 +8,7 @@ import { TrashIcon } from "../../Icons/Icons";
 
 export default function Table(props) {
   const { openModal, onEditData, onDeleteData, tableData, settings } = props;
-  const projects = tableData;
+  const projects = tableData || [];
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "",
@@ -34,6 +34,7 @@ export default function Table(props) {
   };
 
   const sortedObjects = useMemo(() => {
+    if (!projects.length) return [];
     let sortableProjects = [...projects];
     if (
       sortConfig.key &&
@@ -66,10 +67,14 @@ export default function Table(props) {
     onEditData(formState);
   };
 
+  const handleDeleteSelected = () => {
+    onDeleteData(selectedRows);
+  };
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [columns, setColumns] = useState([]);
-  const pageOptions = settings[0].pageOptions;
+  const pageOptions = settings?.[0]?.pageOptions || [5, 10, 20];
   const lastItemIndex = currentPage * itemsPerPage;
   const firstItemIndex = lastItemIndex - itemsPerPage;
   const currentItems = filteredObjects.slice(firstItemIndex, lastItemIndex);
@@ -104,14 +109,14 @@ export default function Table(props) {
       setSelectedRows(newSelection);
     }
   };
-
   useEffect(() => {
-    console.log("selectedRows", selectedRows);
-  }, [selectedRows]);
+    setSelectedRows([]);
+  }, [tableData]);
 
-  if (!projects) {
-    return <div>Loading</div>;
+  if (!projects || projects.length === 0) {
+    return <div>Loading...</div>;
   }
+
   return (
     <div className="table-container">
       <div className="search-container">
@@ -139,7 +144,9 @@ export default function Table(props) {
           {!selectedRows.length || selectedRows.length > 1 ? "s " : " "}
           Selected
         </span>{" "}
-        <TrashIcon />
+        <div onClick={handleDeleteSelected}>
+          <TrashIcon />
+        </div>
       </div>
       <table className="table">
         <THead

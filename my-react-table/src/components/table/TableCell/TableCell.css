@@ -5,6 +5,10 @@
     transition: 0.3s;
 }
 
+.table-content{
+    text-align: left;
+}
+
 .edit-icon{
     position: absolute;
     top:50%;
