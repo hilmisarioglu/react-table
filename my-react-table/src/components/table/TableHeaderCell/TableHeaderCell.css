@@ -1,8 +1,8 @@
 
 .header-content {
     display: flex;
-    justify-content: space-between; /* İçerikleri sağa ve sola yaslar */
-    align-items: center; /* İçerikleri dikey olarak ortalar */
-    width: 100%; /* Header genişliği tam sütun genişliği olsun */
+    justify-content: space-between;
+    align-items: center; 
+    width: 100%; 
   }
   
