@@ -1,35 +1,39 @@
-import React, { useState, useMemo } from 'react';
-import './Table.css';
-import THead from '../THead/THead';
-import { useEffect } from 'react';
-import TBody from '../TBody/TBody';
-import TableRow from '../TableRow/TableRow';
-import { TrashIcon } from '../../Icons/Icons';
-import Pagination from '../../pagination/Pagination';
-import Dropdown from '../../dropdown/Dropdown';
+// const Table = (props) => {
 
-export default function Table(props) {
+// }
+// export default Table
+
+import React, { useState, useMemo } from "react";
+import "./Table.css";
+import THead from "../THead/THead";
+import { useEffect } from "react";
+import TBody from "../TBody/TBody";
+import TableRow from "../TableRow/TableRow";
+import { TrashIcon } from "../../Icons/Icons";
+import Pagination from "../../pagination/Pagination";
+import Dropdown from "../../dropdown/Dropdown";
+const Table = (props) => {
   const { openModal, onEditData, onDeleteData, tableData, settings } = props;
   const projects = tableData || [];
   const [sortConfig, setSortConfig] = useState({
     key: null,
-    direction: '',
+    direction: "",
     sortable: false,
   });
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [visibleColumns, setVisibleColumns] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
 
   const handleHeaderClick = (key) => {
-    let direction = 'ascending';
+    let direction = "ascending";
 
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
     } else if (
       sortConfig.key === key &&
-      sortConfig.direction === 'descending'
+      sortConfig.direction === "descending"
     ) {
-      direction = '';
+      direction = "";
       key = null;
     }
     setSortConfig({ key, direction });
@@ -44,10 +48,10 @@ export default function Table(props) {
     ) {
       sortableProjects.sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? -1 : 1;
+          return sortConfig.direction === "ascending" ? -1 : 1;
         }
         if (a[sortConfig.key] > b[sortConfig.key]) {
-          return sortConfig.direction === 'ascending' ? 1 : -1;
+          return sortConfig.direction === "ascending" ? 1 : -1;
         }
         return 0;
       });
@@ -90,9 +94,9 @@ export default function Table(props) {
   }, [settings]);
 
   const columnWidths = {
-    project: '40%',
-    description: '40%',
-    status: '20%',
+    project: "40%",
+    description: "40%",
+    status: "20%",
   };
 
   const handleRowSelect = (id) => {
@@ -118,7 +122,6 @@ export default function Table(props) {
   if (!projects || projects.length === 0) {
     return <div>Loading...</div>;
   }
-
   return (
     <div className="table-container">
       <div className="search-container">
@@ -161,8 +164,8 @@ export default function Table(props) {
       <div className="footer-pagination">
         <div className="select-delete-container">
           <span>
-            {selectedRows.length} Row
-            {!selectedRows.length || selectedRows.length > 1 ? 's ' : ' '}
+            {selectedRows.length} / {projects.length} Row
+            {!selectedRows.length || selectedRows.length > 1 ? "s " : " "}
             Selected
           </span>
           {selectedRows.length > 0 && (
@@ -186,4 +189,6 @@ export default function Table(props) {
       </div>
     </div>
   );
-}
+};
+
+export default Table;

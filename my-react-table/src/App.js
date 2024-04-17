@@ -1,5 +1,5 @@
-import { Table, Form } from "./components";
-import { PlusIcon } from "./components/Icons/Icons";
+// import { PlusIcon } from "./components/Icons/Icons";
+import Table from "./components/table/Table/Table";
 import { useData } from "./hooks/useData";
 import { useAppSelector } from "./hooks/useStore";
 
@@ -8,9 +8,9 @@ export default function App() {
     handleOpenModal,
     handleEditData,
     handleDelete,
-    FormEditData,
-    onSubmit,
-    isModalOpen,
+    // FormEditData,
+    // onSubmit,
+    // isModalOpen,
     handleCloseModal,
   } = useData();
   const data = useAppSelector((state) => state.projects.objects);
