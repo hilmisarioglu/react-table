@@ -1,8 +1,3 @@
-// const Table = (props) => {
-
-// }
-// export default Table
-
 import React, { useState, useMemo } from "react";
 import "./Table.css";
 import THead from "../THead/THead";
@@ -23,7 +18,6 @@ const Table = (props) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [visibleColumns, setVisibleColumns] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
-
   const handleHeaderClick = (key) => {
     let direction = "ascending";
 
@@ -38,7 +32,6 @@ const Table = (props) => {
     }
     setSortConfig({ key, direction });
   };
-
   const sortedObjects = useMemo(() => {
     if (!projects.length) return [];
     let sortableProjects = [...projects];
@@ -98,7 +91,7 @@ const Table = (props) => {
     description: "40%",
     status: "20%",
   };
-
+  
   const handleRowSelect = (id) => {
     if (selectedRows.includes(id)) {
       setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
@@ -118,6 +111,9 @@ const Table = (props) => {
   useEffect(() => {
     setSelectedRows([]);
   }, [tableData]);
+
+
+
 
   if (!projects || projects.length === 0) {
     return <div>Loading...</div>;
