@@ -1,57 +1,57 @@
-td {
-  text-align: left;
-  vertical-align: bottom;
-  border-bottom: 2px solid #e5e5e5;
-  padding: 6px;
-  line-height: 1.42857;
-  border-top: 1px solid #e5e5e5;
-  background-color: #fff;
-  border-right: 1px solid #e5e5e5;
-  border-left: 1px solid #e5e5e5;
-  height: 40px;
-  vertical-align: middle;
-}
-.table-cell {
-  position: relative;
-  cursor: text;
-}
+  td {
+    /* text-align: left; */
+    /* vertical-align: bottom; */
+    /* border-bottom: 2px solid #e5e5e5; */
+    /* padding: 6px; */
+    /* line-height: 1.42857; */
+    /* border-top: 1px solid #e5e5e5; */
+    /* background-color: #fff; */
+    border-right: 1px solid #e5e5e5;
+    /* border-left: 1px solid #e5e5e5; */
+    /* height: 40px; */
+    /* vertical-align: middle; */
+  }
+  .table-cell {
+    position: relative;
+    cursor: text;
+  }
 
-.table-cell input[type='text'] {
-  width: calc(100% - 10px);
-  padding: 5px;
-  margin: 0;
-  box-sizing: border-box;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-}
+  .table-cell input[type='text'] {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin: 0;
+    box-sizing: border-box;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
 
-.edit-icon {
-  position: absolute;
-  top: 50%;
-  right: 1px;
-  transform: translateY(-50%);
-  opacity: 0.6;
-  cursor: pointer;
-  padding-top: 5px;
-}
+  .edit-icon {
+    position: absolute;
+    top: 50%;
+    right: 1px;
+    transform: translateY(-50%);
+    opacity: 0.6;
+    cursor: pointer;
+    padding-top: 5px;
+  }
 
-.edit-icon:hover {
-  opacity: 1;
-}
+  .edit-icon:hover {
+    opacity: 1;
+  }
 
-.table-cell .table-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
+  .table-cell .table-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
 
-.table-content:hover .edit-icon {
-  display: inline;
-}
+  .table-content:hover .edit-icon {
+    display: inline;
+  }
 
-.table-content-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex-grow: 1;
-}
+  .table-content-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+  }
