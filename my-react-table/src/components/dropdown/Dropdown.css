@@ -1,0 +1,19 @@
+.dropdown-select {
+    background-color:white;
+    border: 1px solid #ddd;
+    color: black;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .dropdown-select:focus {
+    outline: none;
+    border-color: #aaa; 
+  }
+  
+  .dropdown-select:hover {
+    border-color: #888; 
+  }
+  

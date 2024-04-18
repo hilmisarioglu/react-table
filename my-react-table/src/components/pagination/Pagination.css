@@ -4,8 +4,8 @@
     align-items: center;
   }
   .page-button {
-    background-color:#EBEBEB;
-    border: none;
+    background-color:#F9FAFB;
+    border: 1px solid #ddd;
     color: black;
     padding: 8px 12px;
     margin: 0 4px;
@@ -16,8 +16,8 @@
   }
   
   .page-button:hover {
-    background-color: #b9b7b7;
-    color:white;
+    background-color: #EBEBEB;
+    color:black;
     transform: translateY(-1px);
   }
   

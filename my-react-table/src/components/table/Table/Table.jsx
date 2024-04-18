@@ -4,12 +4,14 @@ import THead from "../THead/THead";
 import { useEffect } from "react";
 import TBody from "../TBody/TBody";
 import TableRow from "../TableRow/TableRow";
-import { TrashIcon } from "../../Icons/Icons";
+import { Download, TrashIcon } from "../../Icons/Icons";
 import Pagination from "../../pagination/Pagination";
 import Dropdown from "../../dropdown/Dropdown";
 const Table = (props) => {
-  const { openModal, onEditData, onDeleteData, tableData, settings } = props;
-  const projects = tableData || [];
+  const { onEditData, onDeleteData, tableData, settings } = props;
+  const projects = useMemo(() => {
+    return tableData || [];
+  }, [tableData]);
   const [sortConfig, setSortConfig] = useState({
     key: null,
     direction: "",
@@ -91,7 +93,7 @@ const Table = (props) => {
     description: "40%",
     status: "20%",
   };
-  
+
   const handleRowSelect = (id) => {
     if (selectedRows.includes(id)) {
       setSelectedRows(selectedRows.filter((rowId) => rowId !== id));
@@ -112,8 +114,31 @@ const Table = (props) => {
     setSelectedRows([]);
   }, [tableData]);
 
+  const downloadCsv = () => {
+    const csvRows = [];
+    const headers = visibleColumns
+      .map(
+        (columnKey) => `"${columns.find((col) => col.key === columnKey).label}"`
+      )
+      .join(";");
+    csvRows.push(headers);
 
+    filteredObjects.forEach((row) => {
+      const values = visibleColumns.map((columnKey) => {
+        const escaped = ("" + (row[columnKey] || "")).replace(/"/g, '""'); // Excel için çift tırnak kaçışı
+        return `"${escaped}"`; // Değerleri çift tırnak içine al
+      });
+      csvRows.push(values.join(";"));
+    });
 
+    const csvString = csvRows.join("\n");
+
+    const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "projects.csv";
+    link.click();
+  };
 
   if (!projects || projects.length === 0) {
     return <div>Loading...</div>;
@@ -121,14 +146,32 @@ const Table = (props) => {
   return (
     <div className="table-container">
       <div className="search-container">
-        <input
-          type="text"
-          className="input-container"
-          placeholder="Search projects..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <div className="search-input-container">
+          <input
+            type="text"
+            className="input-container"
+            placeholder="Search projects..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          {searchTerm && (
+            <button onClick={() => setSearchTerm("")} className="clear-button">
+              X
+            </button>
+          )}
+        </div>
+        <div className="download-button-container">
+          <button
+            onClick={downloadCsv}
+            className="download-btn"
+            title="Download CSV"
+          >
+            <Download />
+            <span>Download</span>
+          </button>
+        </div>
       </div>
+
       <table className="table">
         <THead
           columns={columns}
