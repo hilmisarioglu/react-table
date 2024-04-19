@@ -95,14 +95,14 @@ export const Download = () => (
     viewBox="-48.21 -48.21 578.56 578.56"
     transform="matrix(1, 0, 0, 1, 0, 0)rotate(0)"
   >
-    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+    <g id="SVGRepo_bgCarrier" strokeWidth="0" />
 
     <g
       id="SVGRepo_tracerCarrier"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       stroke="#CCCCCC"
-      stroke-width="2.8928399999999996"
+      strokeWidth="2.8928399999999996"
     />
 
     <g id="SVGRepo_iconCarrier">

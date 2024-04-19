@@ -29,7 +29,7 @@ function TableRow(props) {
       className={`table-row ${isSelected ? "selected-row" : ""}`}
       onClick={handleClick}
     >
-      <td>
+      <td className="table-row-td">
         <div className="table-row-container">
           <div>
             <input

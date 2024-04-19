@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import "./TableCell.css";
 import { PencilIcon } from "../../Icons/Icons";
 
 const TableCell = (props) => {

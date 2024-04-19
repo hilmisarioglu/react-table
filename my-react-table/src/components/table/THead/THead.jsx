@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import "./THead.css";
 import TableHeaderCell from "../TableHeaderCell/TableHeaderCell";
 
 function THead(props) {
@@ -16,8 +15,8 @@ function THead(props) {
 
   return (
     <thead>
-      <tr>
-        <th>
+      <tr className='table-row'>
+        <th className="thead-th">
           <div className="table-column-header">
             <div>
               <input

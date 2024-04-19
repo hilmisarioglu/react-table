@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "./TableHeaderCell.css";
 import { Up, Down, UpDown } from "../../Icons/Icons";
 
 const TableHeaderCell = (props) => {
@@ -24,7 +23,7 @@ const TableHeaderCell = (props) => {
   const sortIcon = getSortIcon();
 
   return (
-    <th style={{ width: columnWidth }} onClick={onHeaderCellClick}>
+    <th className="table-header-cell" style={{ width: columnWidth }} onClick={onHeaderCellClick}>
       <div className="table-column-header">
         <div className={`header-content ${!label ? "table-empty-header" : ""}`}>
           {label}
