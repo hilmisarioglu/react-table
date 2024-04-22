@@ -13,11 +13,9 @@ const TableCell = (props) => {
   } = props;
   const [isCurrentlyEdited, setIsCurrentlyEdited] = useState(false);
   const [editValue, setEditValue] = useState(content);
-  const [hover, setHover] = useState(false);
 
   const toggleEdit = () => {
     setIsCurrentlyEdited(true);
-    setHover(true);
   };
 
   const handleChange = (e) => {
@@ -45,8 +43,6 @@ const TableCell = (props) => {
     <td
       style={{ width }}
       className="table-cell"
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
       onClick={() => {
         if (isEditable) toggleEdit();
       }}
