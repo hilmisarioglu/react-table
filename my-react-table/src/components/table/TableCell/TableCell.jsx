@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { PencilIcon } from "../../Icons/Icons";
 
 const TableCell = (props) => {
   const {
@@ -48,6 +47,9 @@ const TableCell = (props) => {
       className="table-cell"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={() => {
+        if (isEditable) toggleEdit();
+      }}
     >
       {isCurrentlyEdited ? (
         <input
@@ -61,11 +63,6 @@ const TableCell = (props) => {
       ) : (
         <div className="table-content">
           <span className="table-content-text">{content}</span>
-          {hover && isEditable && (
-            <span className="edit-icon" onClick={toggleEdit}>
-              <PencilIcon />
-            </span>
-          )}
         </div>
       )}
     </td>
