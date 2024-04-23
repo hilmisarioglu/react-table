@@ -171,35 +171,36 @@ const Table = (props) => {
           </button>
         </div>
       </div>
-
-      <table className="table">
-        <THead
-          columns={columns}
-          visibleColumns={visibleColumns}
-          columnWidths={columnWidths}
-          onHeaderClick={handleHeaderClick}
-          sortConfig={sortConfig}
-          settings={settings[0]}
-          areAllSelected={selectedRows.length === projects.length}
-          handleSelectAllToggle={handleSelectAllToggle}
-        />
-        <TBody>
-          {currentItems.map((item, i) => (
-            <TableRow
-              key={item.id}
-              rowData={item}
-              columns={columns.filter((column) =>
-                visibleColumns.includes(column.key)
-              )}
-              onDeleteData={onDeleteData}
-              handleEditCellClick={handleEditCellClick}
-              settings={settings[0]}
-              isSelected={selectedRows.includes(item.id)}
-              onRowSelect={handleRowSelect}
-            />
-          ))}
-        </TBody>
-      </table>
+      <div className="scrollable-table">
+        <table className="table">
+          <THead
+            columns={columns}
+            visibleColumns={visibleColumns}
+            columnWidths={columnWidths}
+            onHeaderClick={handleHeaderClick}
+            sortConfig={sortConfig}
+            settings={settings[0]}
+            areAllSelected={selectedRows.length === projects.length}
+            handleSelectAllToggle={handleSelectAllToggle}
+          />
+          <TBody>
+            {currentItems.map((item, i) => (
+              <TableRow
+                key={item.id}
+                rowData={item}
+                columns={columns.filter((column) =>
+                  visibleColumns.includes(column.key)
+                )}
+                onDeleteData={onDeleteData}
+                handleEditCellClick={handleEditCellClick}
+                settings={settings[0]}
+                isSelected={selectedRows.includes(item.id)}
+                onRowSelect={handleRowSelect}
+              />
+            ))}
+          </TBody>
+        </table>
+      </div>
       <div className="footer-pagination">
         <div className="select-delete-container">
           <span>

@@ -1,11 +1,12 @@
-.table{
+.table {
   border-collapse: collapse;
-  width:100%;
+  width: 100%;
   border-spacing: 0;
   border: 1px solid #DDD;
   border-radius: 4px;
-  box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 }
+
 .search-container {
   display: flex;
   justify-content: space-between;
@@ -101,6 +102,13 @@
   font-size: 14px;
   color: #333;
   background-color: #FFF;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.scrollable-table {
+  overflow-x: auto;
 }
 
 .search-bar {
