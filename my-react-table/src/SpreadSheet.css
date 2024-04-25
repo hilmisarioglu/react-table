@@ -1,0 +1,93 @@
+/* .spreadsheet-container {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .spreadsheet-search {
+    margin-bottom: 1rem;
+  }
+  
+  .spreadsheet-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+  }
+  
+  .spreadsheet-table thead {
+    background-color: #f0f0f0;
+  }
+  
+  .spreadsheet-table thead th {
+    cursor: pointer;
+    position: relative; 
+    background-repeat: no-repeat;
+    background-position: right center;
+  }
+  
+  
+  .spreadsheet-table th, .spreadsheet-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .spreadsheet-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .spreadsheet-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .pagination-buttons button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .pagination-buttons button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .pagination-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .row-selection-info {
+    margin-top: 1rem;
+  }
+  
+  .search-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .search-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .download-btn {
+    padding: 8px 16px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .download-btn:hover, .pagination-buttons button:hover {
+    opacity: 0.8;
+  }
+   */
