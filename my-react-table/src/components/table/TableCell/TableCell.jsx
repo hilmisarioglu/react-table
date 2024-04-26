@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import PropTypes from "prop-types";
+import { PencilIcon } from "../../Icons/Icons";
 
 const TableCell = (props) => {
   const {
@@ -13,6 +14,7 @@ const TableCell = (props) => {
   } = props;
   const [isCurrentlyEdited, setIsCurrentlyEdited] = useState(false);
   const [editValue, setEditValue] = useState(content);
+  const inputRef = useRef(null);
 
   const toggleEdit = () => {
     setIsCurrentlyEdited(true);
@@ -37,11 +39,17 @@ const TableCell = (props) => {
 
   useEffect(() => {
     setEditValue(content);
-  }, [content]);
+    if (isCurrentlyEdited) {
+      inputRef.current.focus();
+    }
+  }, [content, isCurrentlyEdited]);
 
   return (
     <td
-      style={{ width }}
+      style={{
+        width,
+        cursor: isEditable ? "text" : "not-allowed", // Conditional cursor style
+      }}
       className="table-cell"
       onClick={() => {
         if (isEditable) toggleEdit();
@@ -54,12 +62,22 @@ const TableCell = (props) => {
           onChange={handleChange}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          autoFocus
+          ref={inputRef}
         />
       ) : (
-        <div className="table-content">
-          <span className="table-content-text">{content}</span>
-        </div>
+        <>
+          <input
+            type="text"
+            value={content}
+            readOnly={!isEditable}
+            className="table-content"
+            onKeyDown={(e) => {
+              if (isEditable) {
+                toggleEdit();
+              }
+            }}
+          />
+        </>
       )}
     </td>
   );

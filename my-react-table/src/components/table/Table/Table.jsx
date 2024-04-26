@@ -7,7 +7,7 @@ import TableRow from "../TableRow/TableRow";
 import { Download, TrashIcon } from "../../Icons/Icons";
 import Pagination from "../../pagination/Pagination";
 import Dropdown from "../../dropdown/Dropdown";
-import Spreadsheet from "../../../SpreadSheet";
+
 const Table = (props) => {
   const { onEditData, onDeleteData, tableData, settings } = props;
   const projects = useMemo(() => {
@@ -172,7 +172,7 @@ const Table = (props) => {
           </button>
         </div>
       </div>
-      <Spreadsheet />
+
       <div className="scrollable-table">
         <table className="table">
           <THead

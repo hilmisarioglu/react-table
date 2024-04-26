@@ -137,9 +137,19 @@
   background-color: #F2F2F2;
 }
 
-.table-row:hover {
+.table-row:hover,
+.table-row:hover .table-cell input[type='text'] {
   background-color: #EAEAEA;
-} 
+}
+
+.table-row:hover .table-cell input[type='text']:focus {
+  background-color: white;
+}
+
+.table-cell input[type='text']:not(:focus) {
+  background-color: transparent;
+  pointer-events: none; 
+}
 
 .footer {
   padding: 8px;
@@ -148,7 +158,6 @@
 
 .table-cell , .table-row-td{
   position: relative;
-  cursor: text;
   padding: 12px 8px;
   border-bottom: 1px solid #DDD;
   border-right: 1px solid #e5e5e5;
@@ -159,9 +168,11 @@
   padding: 5px;
   margin: 0;
   box-sizing: border-box;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
+  border:none;
   height: 30px;
+}
+.table-cell input[type='text']:not(:focus) {
+  background-color: transparent;
 }
 
 .edit-icon {
@@ -172,6 +183,7 @@
   opacity: 0.6;
   cursor: pointer;
   padding-top: 5px;
+  /* height: 30px; */
 }
 
 .edit-icon:hover {
@@ -188,6 +200,7 @@
 
 .table-content:hover .edit-icon {
   display: inline;
+  /* line-height: 30px;  */
 }
 
 .table-content-text {
